@@ -1,0 +1,80 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Zadanie_6__3_
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string text_box1 = textBox1.Text;
+                int n = int.Parse(text_box1);
+                int[,] array = new int[n, n];
+                int[,] array2 = new int[n, n];
+                int i, j;
+                Random rand = new Random();
+                textBox4.Text += ("Исходный массив:") + "\r\n";
+                for (i = 0; i < n; i++)
+                {
+                    for (j = 0; j < n; j++)
+                    {
+                        array[i, j] = rand.Next(0, 10);
+                        textBox4.Text += ($"{array[i, j]} ") + "\r\n";
+                    }
+                }
+
+                if (n % 2 == 0)
+                {
+                    textBox4.Text += ("Четное количество строк") + "\r\n";
+                    for (i = 0; i < n; i += 2)
+                    {
+                        for (j = 0; j < n; j++)
+                        {
+                            array2[i, j] = array[i, j];
+                            array[i, j] = array[i + 1, j];
+                            array[i + 1, j] = array2[i, j];
+                        }
+                    }
+                }
+                else textBox4.Text += ("Число столбцов нечетное, изменений нет!") + "\r\n";
+
+                for (i = 0; i < n; i++)
+                {
+                    for (j = 0; j < n; j++)
+                    {
+                        textBox4.Text += ($"{array[i, j]} ") + "\r\n";
+                    }
+                    Console.WriteLine();
+                }
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Ошибка! Введите размерность массива больше нуля");
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+            textBox4.ScrollBars = ScrollBars.Vertical;
+        }
+    }
+}
